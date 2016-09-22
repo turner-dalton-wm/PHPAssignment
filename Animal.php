@@ -1,11 +1,14 @@
 <?php
 
-class Animal {
+//final class Animal {
+//Child classes Bull and Cow methods will not work because the final keyboard stops overriding
+abstract class Animal {
 
     protected $name;
     protected $age;
-    protected $maxAge;
     protected $health;
+
+    public static $maxAge = 100;
 
     public function __construct($name, $age, $health) {
         $this->name = $name;
@@ -13,13 +16,22 @@ class Animal {
         $this->health = $health;
     }
 
-    public function eat() {
+    /*public function eat() {
         $this->health += 2;
-    }
+    }*/
+
+    public abstract function eat();
 
     public function sleep() {
-        $this->age += 1;
         $this->health += 1;
+        $this->age += 1;
+        if($this->age > self::$maxAge) echo '<br>Animal has reached its max age.<br>';
+    }
+
+    public function iterate() {
+        foreach($this as $key => $value) {
+            print "$key => $value<br>";
+        }
     }
 
     public function getName() {
@@ -38,46 +50,12 @@ class Animal {
         $this->age = $age;
     }
 
-    public function getMaxAge() {
-        return $this->maxAge;
-    }
-
-    protected function setMaxAge($maxAge) {
-        $this->maxAge = $maxAge;
-    }
-
     public function getHealth() {
         return $this->health;
     }
 
     protected function setHealth($health) {
         $this->health = $health;
-    }
-
-}
-
-class Bull extends Animal {
-
-    public function __construct($name, $age, $health) {
-        parent::__construct($name, $age, $health);
-        $this->setMaxAge(100);
-    }
-
-    public function eat() {
-        $this->health += 3;
-    }
-
-}
-
-class Cow extends Animal {
-
-    public function __construct($name, $age, $health) {
-        parent::__construct($name, $age, $health);
-        $this->setMaxAge(80);
-    }
-
-    public function eat() {
-        $this->health += 1;
     }
 
 }
